@@ -1,3 +1,6 @@
+[![Docker Automated build](https://img.shields.io/docker/automated/skjnldsv/nextcloud-dev.svg?style=flat-square)](https://hub.docker.com/r/skjnldsv/nextcloud-dev/) [![Docker Pulls](https://img.shields.io/docker/pulls/skjnldsv/nextcloud-dev.svg?style=flat-square)](https://hub.docker.com/r/skjnldsv/nextcloud-dev/)
+
+
 ## This is a nextcloud development environment stack for docker🚀
 
 This is a php docker designed to be used with the compose file present in this repository.
