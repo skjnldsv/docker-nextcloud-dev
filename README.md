@@ -2,11 +2,11 @@
 
 This is a php docker designed to be used with the compose file present in this repository.
 This is not designed to be a quick dev setup on the fly, but rather a semi-permanent setup. 💻
-Built-in: ldap imagick, APCu, redis, memcached, redis...
+Built-in: ldap, gd, imagick, APCu, redis, memcached...
 
 ## How-to 🤔
 
-1. download the docker-compose file and put it in your desired folder
+1. download this repository and rename it the way you want)
 2. into the folder, clone [nextcloud server](https://github.com/nextcloud/server)
 3. edit the port binding of the `web` service in the compose file (default: 4443) **[optional]**
 4. execute the stack: `docker-compose up -d`
