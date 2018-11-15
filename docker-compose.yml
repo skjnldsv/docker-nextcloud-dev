@@ -21,9 +21,7 @@ services:
             - nextcloud
 
     php:
-        build:
-            context: ./fpm
-            dockerfile: ./Dockerfile
+        image: skjnldsv/docker-nextcloud-dev
         volumes:
             - ./server:/var/www/html
             - ./data:/var/www/html/data
