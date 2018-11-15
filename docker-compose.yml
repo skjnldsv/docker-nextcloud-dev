@@ -21,7 +21,7 @@ services:
             - nextcloud
 
     php:
-        image: skjnldsv/docker-nextcloud-dev
+        image: skjnldsv/nextcloud-dev
         volumes:
             - ./server:/var/www/html
             - ./data:/var/www/html/data
