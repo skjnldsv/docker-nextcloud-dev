@@ -1,0 +1,78 @@
+version: '2'
+
+volumes:
+    mariadb:
+
+networks:
+    nextcloud:
+
+services:
+    db:
+        image: mariadb
+        restart: always
+        volumes:
+            - mariadb:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=rootpassword
+            - MYSQL_PASSWORD=password
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+        networks:
+            - nextcloud
+
+    php:
+        build:
+            context: ./fpm
+            dockerfile: ./Dockerfile
+        volumes:
+            - ./server:/var/www/html
+            - ./data:/var/www/html/data
+            - ./config/autoconfig.php:/var/www/html/config/autoconfig.php:ro
+            - ./config/debug.config.php:/var/www/html/config/debug.config.php:ro
+            # - ./config/smtp.config.php:/var/www/html/config/smtp.config.php:ro
+            - ./config/apcu.config.php:/var/www/html/config/apcu.config.php:ro
+            - ./config/apps.config.php:/var/www/html/config/apps.config.php:ro
+        restart: always
+        environment:
+            - MYSQL_HOST=db
+            - MYSQL_PASSWORD=password
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+        depends_on:
+            - db
+        networks:
+            - nextcloud
+
+    web:
+        image: nginx
+        ports:
+            - 4443:443
+        volumes:
+            - ./server:/var/www/html
+            - ./nextcloud.conf:/etc/nginx/conf.d/nextcloud.conf:ro
+            - ./ssl:/etc/nginx/ssl:ro
+        restart: always
+        networks:
+            - nextcloud
+        depends_on:
+            - php
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        environment:
+            - MYSQL_ROOT_PASSWORD=rootpassword
+            - MYSQL_PASSWORD=password
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+            - PMA_HOST=db
+        restart: always
+        networks:
+            - nextcloud
+        depends_on:
+            - db
+    
+    # smtp:
+    #     image: namshi/smtp
+    #     restart: always
+    #     networks:
+    #         - nextcloud
