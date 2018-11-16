@@ -8,11 +8,16 @@ RUN set -ex; \
         rsync \
         bzip2 \
         busybox-static \
+        curl \
     ; \
     rm -rf /var/lib/apt/lists/*; \
     \
     mkdir -p /var/spool/cron/crontabs; \
     echo '*/15 * * * * php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data
+
+# Install phpunit 7
+RUN curl -L https://phar.phpunit.de/phpunit-7.phar > /usr/local/bin/phpunit \
+    && chmod +x /usr/local/bin/phpunit
 
 # install the PHP extensions we need
 # see https://docs.nextcloud.com/server/12/admin_manual/installation/source_installation.html

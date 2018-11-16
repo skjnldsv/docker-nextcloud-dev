@@ -5,7 +5,7 @@
 
 This is a php docker designed to be used with the compose file present in this repository.
 This is not designed to be a quick dev setup on the fly, but rather a semi-permanent setup. 💻
-Built-in: ldap, gd, imagick, APCu, redis, memcached...
+Built-in: phpunit, ldap, gd, imagick, APCu, redis, memcached...
 
 ## How-to 🤔
 
