@@ -36,6 +36,12 @@ We use mariadb by default. If you don't want it, you can:
 2. remove the `MYSQL` environment params of the php service in the compose file
 3. go to the setup of your nextcloud and choose the desired database
 
+# Phpunit ⛑
+You can run the test you want with phpunit bootstrap
+`docker-compose exec --user=docker php phpunit --bootstrap tests/bootstrap.php tests/Core/Controller/ClientFlowLoginControllerTest.php`
+Or the full suite:
+`docker-compose exec php phpunit --configuration tests/phpunit-autotest.xml`
+
 ## Quick smtp 
 Want a quick smtp server to test emails on nextcloud ? 
 1. on your compose file, uncomment the smtp service and the smtp volume binding on the php service.
