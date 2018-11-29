@@ -38,9 +38,13 @@ We use mariadb by default. If you don't want it, you can:
 
 # Phpunit ⛑
 You can run the test you want with phpunit bootstrap
-`docker-compose exec --user=docker php phpunit --bootstrap tests/bootstrap.php tests/Core/Controller/ClientFlowLoginControllerTest.php`
+```sh
+docker-compose exec --user=docker php phpunit --bootstrap tests/bootstrap.php tests/Core/Controller/ClientFlowLoginControllerTest.php
+```
 Or the full suite:
-`docker-compose exec php phpunit --configuration tests/phpunit-autotest.xml`
+```sh
+docker-compose exec php phpunit --configuration tests/phpunit-autotest.xml
+```
 
 ## Quick smtp 
 Want a quick smtp server to test emails on nextcloud ? 
