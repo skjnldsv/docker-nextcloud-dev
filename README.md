@@ -36,7 +36,7 @@ We use mariadb by default. If you don't want it, you can:
 2. remove the `MYSQL` environment params of the php service in the compose file
 3. go to the setup of your nextcloud and choose the desired database
 
-# Phpunit ⛑
+## Phpunit ⛑
 You can run the test you want with phpunit bootstrap
 ```sh
 docker-compose exec --user=docker php phpunit --bootstrap tests/bootstrap.php tests/Core/Controller/ClientFlowLoginControllerTest.php
