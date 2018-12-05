@@ -39,7 +39,7 @@ We use mariadb by default. If you don't want it, you can:
 ## OCC commands ⌨
 You can run any occ command with docker (example: upgrade)
 ```sh
-$ docker-compose exec --user=docker php occ upgrade
+$ docker-compose exec --user=docker php php occ upgrade
 ```
 
 ## Phpunit ⛑
