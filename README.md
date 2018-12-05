@@ -22,7 +22,7 @@ Built-in: phpunit, ldap, gd, imagick, APCu, redis, memcached...
 
 ## Retrieve a container's IP 🌐
 ```sh
-$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' YOUR_CONTAINER_XXX_XXXXX`
+$ docker-compose exec web hostname -I
 172.20.0.3
 ```
 
@@ -36,14 +36,20 @@ We use mariadb by default. If you don't want it, you can:
 2. remove the `MYSQL` environment params of the php service in the compose file
 3. go to the setup of your nextcloud and choose the desired database
 
+## OCC commands ⌨
+You can run any occ command with docker (example: upgrade)
+```sh
+$ docker-compose exec --user=docker php occ upgrade
+```
+
 ## Phpunit ⛑
 You can run the test you want with phpunit bootstrap
 ```sh
-docker-compose exec --user=docker php phpunit --bootstrap tests/bootstrap.php tests/Core/Controller/ClientFlowLoginControllerTest.php
+$ docker-compose exec --user=docker php phpunit --bootstrap tests/bootstrap.php tests/Core/Controller/ClientFlowLoginControllerTest.php
 ```
 Or the full suite:
 ```sh
-docker-compose exec php phpunit --configuration tests/phpunit-autotest.xml
+$ docker-compose exec php phpunit --configuration tests/phpunit-autotest.xml
 ```
 
 ## Quick smtp 
