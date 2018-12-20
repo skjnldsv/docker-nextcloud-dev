@@ -11,6 +11,12 @@ Built-in: phpunit, ldap, gd, imagick, APCu, redis, memcached...
 
 1. download this repository and rename it the way you want)
 2. into the folder, clone [nextcloud server](https://github.com/nextcloud/server)
+```sh
+git clone git@github.com:nextcloud/server.git
+cd server
+git submodule update --init
+mkdir custom_apps
+```
 3. edit the port binding of the `web` service in the compose file (default: 4443) **[optional]**
 4. execute the stack: `docker-compose up -d`
 5. two options now:
