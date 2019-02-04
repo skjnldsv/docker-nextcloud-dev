@@ -7,8 +7,8 @@ $CONFIG = array (
               "writable" => false,
       ),
       1 => array (
-              "path"     => OC::$SERVERROOT."/custom_apps",
-              "url"      => "/custom_apps",
+              "path"     => OC::$SERVERROOT."/apps2",
+              "url"      => "/apps2",
               "writable" => true,
       ),
   ),
