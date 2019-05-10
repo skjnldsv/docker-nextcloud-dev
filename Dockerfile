@@ -9,6 +9,7 @@ RUN set -ex; \
         bzip2 \
         busybox-static \
         curl \
+        smbclient \
     ; \
     rm -rf /var/lib/apt/lists/*; \
     \
@@ -38,6 +39,7 @@ RUN set -ex; \
         libpq-dev \
         libxml2-dev \
         libmagickwand-dev \
+        libsmbclient-dev \
     ; \
     \
     debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
@@ -61,6 +63,7 @@ RUN set -ex; \
     pecl install redis-4.1.1; \
     pecl install imagick; \
     pecl install xdebug; \
+    pecl install smbclient; \
     \
     docker-php-ext-enable \
         apcu \
@@ -68,6 +71,7 @@ RUN set -ex; \
         redis \
         imagick \
         xdebug \
+        smbclient \
     ; \
     \
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
