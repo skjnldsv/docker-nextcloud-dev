@@ -93,7 +93,8 @@ RUN { \
         echo '[global]'; \
         echo 'client min protocol = SMB2'; \
         echo 'client max protocol = SMB3'; \
-    } > /etc/samba/smb.conf
+        echo 'hide dot files = no'; \
+    } >> /etc/samba/smb.conf
 
 # npm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash \
