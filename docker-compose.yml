@@ -28,8 +28,8 @@ services:
         build: ./docker-mysql-proxy
         restart: always
         volumes:
-            - ./docker-mysql-proxy/log.lua:/opt/mysql-proxy/conf/log.lua:ro
-            - ./docker-mysql-proxy/main.lua:/opt/mysql-proxy/conf/main.lua:ro
+            - ./config/mysql-proxy/log.lua:/opt/mysql-proxy/conf/log.lua:ro
+            - ./config/mysql-proxy/main.lua:/opt/mysql-proxy/conf/main.lua:ro
         environment:
             PROXY_DB_PORT: 3306
             REMOTE_DB_HOST: mysql
@@ -47,9 +47,11 @@ services:
             - ./server:/var/www/html
             - ./data:/var/www/html/data
             - ./apps2:/var/www/html/apps2
-            # COMMENT IF YOU WANT FULL CONTROL ON THE NEXTCLOUD SETUP
+            # COMMENT IF YOU WANT FULL CONTROL ON THE NEXTCLOUD INITIAL SETUP
             - ./config/autoconfig.php:/var/www/html/config/autoconfig.php:ro
             - ./config/debug.config.php:/var/www/html/config/debug.config.php:ro
+            # COMMENT TO DISABLE REDIS
+            - ./config/redis.config.php:/var/www/html/config/redis.config.php:ro
             # UNCOMMENT TO ENABLE SMTP
             # - ./config/smtp.config.php:/var/www/html/config/smtp.config.php:ro
             - ./config/apcu.config.php:/var/www/html/config/apcu.config.php:ro
@@ -61,9 +63,9 @@ services:
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
             - PHP_IDE_CONFIG='serverName=cli'
-            # UNCOMMENT TO ENABLE XDEBUG: you need to replace the 192.168.1.111 ip 
+            # UNCOMMENT TO ENABLE XDEBUG: you need to replace the 192.168.1.123 ip 
             # by your static local ip and uncomment the following line
-            # - XDEBUG_CONFIG='remote_host=192.168.1.111 remote_autostart=On remote_enable=On idekey=XDEBUG remote_log=/tmp/xdebug.log remote_port=9999'
+            # - XDEBUG_CONFIG='remote_host=192.168.1.123 remote_autostart=On remote_enable=On idekey=XDEBUG remote_log=/tmp/xdebug.log remote_port=9999'
             # - PHP_XDEBUG_ENABLED=1
             # - PHP_XDEBUG_IDE_KEY=XDEBUG
         depends_on:
@@ -109,3 +111,10 @@ services:
     #     restart: always
     #     networks:
     #         - nextcloud
+
+    # COMMENT TO DISABLE REDIS
+    redis:
+        image: redis:latest
+        restart: always
+        networks:
+            - nextcloud
