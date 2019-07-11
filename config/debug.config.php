@@ -1,5 +1,5 @@
 <?php
 $CONFIG = array (
-  'loglevel' => '1',
+  'loglevel' => '0',
   'debug' => true
 );
