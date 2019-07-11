@@ -11,7 +11,15 @@ Built-in: phpunit, ldap, gd, imagick, APCu, redis, memcached...
 
 1. Download this repository and rename it the way you want
 2. Into the docker folder, clone [nextcloud server](https://github.com/nextcloud/server)
+   ```sh
+   git clone git@github.com:nextcloud/server.git
+   ```
 3. Into the `server` folder, update the 3rdparty submodule: `git submodule update --init`
+   ```sh
+   cd server
+   git submodule update --init
+   cd ..
+   ```
 4. Execute the stack: `docker-compose up -d`
 5. Access the nextcloud through http://localhost
 6. Go to the setup of your nextcloud, enter your desired username and your password
