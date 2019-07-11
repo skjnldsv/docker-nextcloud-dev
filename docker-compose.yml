@@ -7,9 +7,11 @@ networks:
     nextcloud:
 
 services:
-    db:
+    mysql:
         image: mariadb
         restart: always
+        # https://docs.nextcloud.com/server/stable/admin_manual/configuration_database/mysql_4byte_support.html
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --innodb-file-per-table
         volumes:
             - mariadb:/var/lib/mysql
         environment:
@@ -20,13 +22,35 @@ services:
         networks:
             - nextcloud
 
+    # DB proxy: watch docker logs to see all sql queries
+    # `docker-compose logs -f db`
+    db:
+        build: ./docker-mysql-proxy
+        restart: always
+        volumes:
+            - ./docker-mysql-proxy/log.lua:/opt/mysql-proxy/conf/log.lua:ro
+            - ./docker-mysql-proxy/main.lua:/opt/mysql-proxy/conf/main.lua:ro
+        environment:
+            PROXY_DB_PORT: 3306
+            REMOTE_DB_HOST: mysql
+            REMOTE_DB_PORT: 3306
+            LUA_SCRIPT: "/opt/mysql-proxy/conf/main.lua"
+            LOG_FILE: "/tmp/mysql.log"
+        depends_on:
+            - mysql
+        networks:
+            - nextcloud
+
     php:
         image: skjnldsv/nextcloud-dev
         volumes:
             - ./server:/var/www/html
             - ./data:/var/www/html/data
+            - ./apps2:/var/www/html/apps2
+            # COMMENT IF YOU WANT FULL CONTROL ON THE NEXTCLOUD SETUP
             - ./config/autoconfig.php:/var/www/html/config/autoconfig.php:ro
             - ./config/debug.config.php:/var/www/html/config/debug.config.php:ro
+            # UNCOMMENT TO ENABLE SMTP
             # - ./config/smtp.config.php:/var/www/html/config/smtp.config.php:ro
             - ./config/apcu.config.php:/var/www/html/config/apcu.config.php:ro
             - ./config/apps.config.php:/var/www/html/config/apps.config.php:ro
@@ -36,6 +60,12 @@ services:
             - MYSQL_PASSWORD=password
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
+            - PHP_IDE_CONFIG='serverName=cli'
+            # UNCOMMENT TO ENABLE XDEBUG: you need to replace the 192.168.1.111 ip 
+            # by your static local ip and uncomment the following line
+            # - XDEBUG_CONFIG='remote_host=192.168.1.111 remote_autostart=On remote_enable=On idekey=XDEBUG remote_log=/tmp/xdebug.log remote_port=9999'
+            # - PHP_XDEBUG_ENABLED=1
+            # - PHP_XDEBUG_IDE_KEY=XDEBUG
         depends_on:
             - db
         networks:
@@ -43,32 +73,37 @@ services:
 
     web:
         image: nginx
-        ports:
-            - 4443:443
+        # ports:
+        #    - 443:443
+        #    - 80:80
         volumes:
             - ./server:/var/www/html
-            - ./nextcloud.conf:/etc/nginx/conf.d/nextcloud.conf:ro
-            - ./ssl:/etc/nginx/ssl:ro
+            - ./apps2:/var/www/html/apps2
+            - ./nextcloud.conf:/etc/nginx/conf.d/default.conf:ro
+            # UNCOMMENT IF SSL WANTED
+            # - ./ssl:/etc/nginx/ssl:ro
         restart: always
         networks:
             - nextcloud
         depends_on:
             - php
 
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin:latest
-        environment:
-            - MYSQL_ROOT_PASSWORD=rootpassword
-            - MYSQL_PASSWORD=password
-            - MYSQL_DATABASE=nextcloud
-            - MYSQL_USER=nextcloud
-            - PMA_HOST=db
-        restart: always
-        networks:
-            - nextcloud
-        depends_on:
-            - db
+    # UNCOMMENT TO ENABLE PHPMYADMIN
+    # phpmyadmin:
+    #     image: phpmyadmin/phpmyadmin:latest
+    #     environment:
+    #         - MYSQL_ROOT_PASSWORD=rootpassword
+    #         - MYSQL_PASSWORD=password
+    #         - MYSQL_DATABASE=nextcloud
+    #         - MYSQL_USER=nextcloud
+    #         - PMA_HOST=db
+    #     restart: always
+    #     networks:
+    #         - nextcloud
+    #     depends_on:
+    #         - db
     
+    # UNCOMMENT TO ENABLE SMTP
     # smtp:
     #     image: namshi/smtp
     #     restart: always

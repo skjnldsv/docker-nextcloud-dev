@@ -9,6 +9,7 @@ RUN set -ex; \
         bzip2 \
         busybox-static \
         curl \
+        smbclient \
     ; \
     rm -rf /var/lib/apt/lists/*; \
     \
@@ -38,6 +39,7 @@ RUN set -ex; \
         libpq-dev \
         libxml2-dev \
         libmagickwand-dev \
+        libsmbclient-dev \
     ; \
     \
     debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
@@ -61,6 +63,7 @@ RUN set -ex; \
     pecl install redis-4.1.1; \
     pecl install imagick; \
     pecl install xdebug; \
+    pecl install smbclient; \
     \
     docker-php-ext-enable \
         apcu \
@@ -68,6 +71,7 @@ RUN set -ex; \
         redis \
         imagick \
         xdebug \
+        smbclient \
     ; \
     \
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
@@ -83,6 +87,20 @@ RUN set -ex; \
     \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     rm -rf /var/lib/apt/lists/*
+
+# samba
+RUN { \
+        echo '[global]'; \
+        echo 'client min protocol = SMB2'; \
+        echo 'client max protocol = SMB3'; \
+        echo 'hide dot files = no'; \
+    } > /etc/samba/smb.conf
+
+# npm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash \
+    && export NVM_DIR="/root/.nvm" \
+    && . "$NVM_DIR/nvm.sh" \
+    && nvm install --lts
 
 # set recommended PHP.ini settings
 # see https://docs.nextcloud.com/server/12/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
