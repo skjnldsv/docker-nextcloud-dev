@@ -44,18 +44,18 @@ services:
     php:
         image: skjnldsv/nextcloud-dev
         volumes:
-            - ./server:/var/www/html
-            - ./data:/var/www/html/data
-            - ./apps2:/var/www/html/apps2
+            - ./server:/var/www/nextcloud
+            - ./data:/var/www/nextcloud/data
+            - ./apps2:/var/www/nextcloud/apps2
             # COMMENT IF YOU WANT FULL CONTROL ON THE NEXTCLOUD INITIAL SETUP
-            - ./config/autoconfig.php:/var/www/html/config/autoconfig.php:ro
-            - ./config/debug.config.php:/var/www/html/config/debug.config.php:ro
+            - ./config/autoconfig.php:/var/www/nextcloud/config/autoconfig.php:ro
+            - ./config/debug.config.php:/var/www/nextcloud/config/debug.config.php:ro
             # COMMENT TO DISABLE REDIS
-            - ./config/redis.config.php:/var/www/html/config/redis.config.php:ro
+            - ./config/redis.config.php:/var/www/nextcloud/config/redis.config.php:ro
             # UNCOMMENT TO ENABLE SMTP
-            # - ./config/smtp.config.php:/var/www/html/config/smtp.config.php:ro
-            - ./config/apcu.config.php:/var/www/html/config/apcu.config.php:ro
-            - ./config/apps.config.php:/var/www/html/config/apps.config.php:ro
+            # - ./config/smtp.config.php:/var/www/nextcloud/config/smtp.config.php:ro
+            - ./config/apcu.config.php:/var/www/nextcloud/config/apcu.config.php:ro
+            - ./config/apps.config.php:/var/www/nextcloud/config/apps.config.php:ro
         restart: always
         environment:
             - MYSQL_HOST=db
@@ -75,12 +75,13 @@ services:
 
     web:
         image: nginx
-        # ports:
+        ports:
+        # UNCOMMENT IF SSL WANTED
         #    - 443:443
-        #    - 80:80
+            - 80:80
         volumes:
-            - ./server:/var/www/html
-            - ./apps2:/var/www/html/apps2
+            - ./server:/var/www/nextcloud
+            - ./apps2:/var/www/nextcloud/apps2
             - ./nextcloud.conf:/etc/nginx/conf.d/default.conf:ro
             # UNCOMMENT IF SSL WANTED
             # - ./ssl:/etc/nginx/ssl:ro
