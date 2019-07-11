@@ -28,8 +28,8 @@ services:
         build: ./docker-mysql-proxy
         restart: always
         volumes:
-            - ./config/mysql-proxy/log.lua:/opt/mysql-proxy/conf/log.lua:ro
-            - ./config/mysql-proxy/main.lua:/opt/mysql-proxy/conf/main.lua:ro
+            - ./docker-mysql-proxy/log.lua:/opt/mysql-proxy/conf/log.lua:ro
+            - ./docker-mysql-proxy/main.lua:/opt/mysql-proxy/conf/main.lua:ro
         environment:
             PROXY_DB_PORT: 3306
             REMOTE_DB_HOST: mysql
