@@ -26,7 +26,7 @@ Built-in: phpunit, ldap, gd, imagick, APCu, redis, memcached...
 7. Enjoy contributing! 🥂 🎉 
 
 ## Using https 🔐
-1. Search for all the 'IF SSL WANTED' strings on the `nextcloud.conf` and `docker-compose.yml`
+1. Search for all the `IF SSL WANTED` strings on the `nextcloud.conf` and `docker-compose.yml`
 2. Comment or uncomment accordingly
 3. Put your ssl certificates on the ssl folder (`fullchain.pem`, `privkey.pem` and `chain.pem`)
 4. Set your domain name on the `server_name` option of the `nextcloud.conf` file
