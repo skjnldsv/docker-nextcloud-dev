@@ -25,6 +25,23 @@ Built-in: phpunit, ldap, gd, imagick, APCu, redis, memcached...
 6. Go to the setup of your nextcloud, enter your desired username and your password
 7. Enjoy contributing! 🥂 🎉 
 
+## Using https 🔐
+1. Search for all the `IF SSL WANTED` strings on the `nextcloud.conf` and `docker-compose.yml`
+2. Comment or uncomment accordingly
+3. Put your ssl certificates on the ssl folder (`fullchain.pem`, `privkey.pem` and `chain.pem`)
+4. Set your domain name on the `server_name` option of the `nextcloud.conf` file
+5. Make sure your browser bind your domain name to the appropriate ip
+   If you did not change anything on the ports config, you can simply edit your `/etc/hosts` file and add an entry with your domain name and `127.0.0.1`: `127.0.0.1		your.domain.name
+6. Add your domain to the list of trusted domains in your `server/config/config.php` file:
+   ``` php
+   'trusted_domains' => 
+   array (
+     0 => 'localhost',
+     1 => 'your.domain.name',
+   ),
+   ```
+6. Now access https://your.domain.name.
+
 ## Retrieve a container's IP 🌐
 ```sh
 $ docker-compose exec web hostname -i
@@ -33,7 +50,7 @@ $ docker-compose exec web hostname -i
 
 ## Install apps 👾
 - If you want to install apps, you can directly go into your apps management
-- **but** if you want to work on apps development, just clone their git repository into the apps2 folder
+- **but** if you want to work on apps development, just clone their git repository into the apps2 folder (on the root, not on the server folder)
 
 ## Change the database config 🙌
 We use mariadb by default. If you don't want it, you can:
