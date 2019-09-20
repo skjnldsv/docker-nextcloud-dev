@@ -134,4 +134,4 @@ RUN apt-get clean && apt-get --yes --quiet autoremove --purge \
 
 USER docker
 
-VOLUME /var/www/html
+VOLUME /var/www/nextcloud
