@@ -7,6 +7,9 @@ This is a php docker designed to be used with the compose file present in this r
 This is not designed to be a quick dev setup on the fly, but rather a semi-permanent setup. 💻
 Built-in: phpunit, ldap, gd, imagick, APCu, redis, memcached...
 
+We basically use the same nginx config than the documentation: https://docs.nextcloud.com/server/stable/admin_manual/installation/nginx.html
+Only the php-handler server is changed to the php container
+
 ## How-to 🤔
 
 1. Download this repository and rename it the way you want
