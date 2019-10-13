@@ -58,10 +58,13 @@ services:
             - ./config/apps.config.php:/var/www/nextcloud/config/apps.config.php:ro
         restart: always
         environment:
+            # use mysql instead of db if you disabled the db proxy
             - MYSQL_HOST=db
             - MYSQL_PASSWORD=password
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
+            # comment if redis is disabled
+            - REDIS_HOST=redis
             - PHP_IDE_CONFIG='serverName=cli'
             # UNCOMMENT TO ENABLE XDEBUG: you need to replace the 192.168.1.123 ip 
             # by your static local ip and uncomment the following line
@@ -69,7 +72,10 @@ services:
             # - PHP_XDEBUG_ENABLED=1
             # - PHP_XDEBUG_IDE_KEY=XDEBUG
         depends_on:
+            # use mysql instead of db if you disabled the db proxy
             - db
+            # comment if redis is disabled
+            - redis
         networks:
             - nextcloud
 
@@ -99,11 +105,13 @@ services:
     #         - MYSQL_PASSWORD=password
     #         - MYSQL_DATABASE=nextcloud
     #         - MYSQL_USER=nextcloud
+    #         # use mysql instead of db if you disabled the db proxy
     #         - PMA_HOST=db
     #     restart: always
     #     networks:
     #         - nextcloud
     #     depends_on:
+    #         # use mysql instead of db if you disabled the db proxy
     #         - db
     
     # UNCOMMENT TO ENABLE SMTP
