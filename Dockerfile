@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-stretch
+FROM php:fpm-stretch
 
 # entrypoint.sh and cron.sh dependencies
 RUN set -ex; \
@@ -135,3 +135,4 @@ RUN apt-get clean && apt-get --yes --quiet autoremove --purge \
 USER docker
 
 VOLUME /var/www/nextcloud
+WORKDIR /var/www/nextcloud
