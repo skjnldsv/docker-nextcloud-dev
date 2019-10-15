@@ -1,4 +1,4 @@
-FROM php:fpm-stretch
+FROM php:7.2-fpm-stretch
 
 # entrypoint.sh and cron.sh dependencies
 RUN set -ex; \
