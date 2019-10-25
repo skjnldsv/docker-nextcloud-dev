@@ -1,0 +1,12 @@
+sudo: required
+services:
+  - docker
+
+before_script:
+  - docker pull skjnldsv/docker-nextcloud-dev || true
+
+script:
+  - docker build --pull --cache-from skjnldsv/docker-nextcloud-dev --tag skjnldsv/docker-nextcloud-dev .
+
+after_script:
+  - docker images
