@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-stretch
+FROM php:7.3-fpm-stretch
 
 # entrypoint.sh and cron.sh dependencies
 RUN set -ex; \
@@ -40,6 +40,7 @@ RUN set -ex; \
         libxml2-dev \
         libmagickwand-dev \
         libsmbclient-dev \
+        libzip-dev \
     ; \
     \
     debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
@@ -58,9 +59,9 @@ RUN set -ex; \
     ; \
     \
 # pecl will claim success even if one install fails, so we need to perform each install separately
-    pecl install APCu-5.1.12; \
-    pecl install memcached-3.0.4; \
-    pecl install redis-4.1.1; \
+    pecl install APCu; \
+    pecl install memcached; \
+    pecl install redis; \
     pecl install imagick; \
     pecl install xdebug; \
     pecl install smbclient; \
