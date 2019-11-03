@@ -137,7 +137,7 @@ RUN apt-get clean && apt-get --yes --quiet autoremove --purge \
 ADD ./docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 RUN chmod a+x /usr/local/bin/docker_entrypoint.sh
 
-ENTRYPOINT ["/usr/local/bin/docker_entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/sudo /usr/local/bin/docker_entrypoint.sh"]
 
 USER docker
 
