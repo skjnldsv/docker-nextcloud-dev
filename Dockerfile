@@ -5,6 +5,7 @@ RUN set -ex; \
     \
     apt-get update; \
     apt-get install -y --no-install-recommends \
+        iproute2 \
         rsync \
         bzip2 \
         busybox-static \
@@ -137,3 +138,8 @@ USER docker
 
 VOLUME /var/www/nextcloud
 WORKDIR /var/www/nextcloud
+
+ADD ./docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
+RUN chmod a+x /usr/local/bin/docker_entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/docker_entrypoint.sh"]
