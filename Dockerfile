@@ -6,6 +6,7 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         iproute2 \
+        sudo \
         rsync \
         bzip2 \
         busybox-static \
