@@ -66,11 +66,13 @@ services:
             # comment if redis is disabled
             - REDIS_HOST=redis
             - PHP_IDE_CONFIG='serverName=cli'
-            # UNCOMMENT TO ENABLE XDEBUG: you need to replace the 192.168.1.123 ip 
-            # by your static local ip and uncomment the following line
-            # - XDEBUG_CONFIG='remote_host=192.168.1.123 remote_autostart=On remote_enable=On idekey=XDEBUG remote_log=/tmp/xdebug.log remote_port=9999'
-            # - PHP_XDEBUG_ENABLED=1
-            # - PHP_XDEBUG_IDE_KEY=XDEBUG
+            - NEXTCLOUD_DATA_DIR=/var/www/nextcloud/data
+            # UNCOMMENT TO ENABLE XDEBUG 
+            # host.docker.internal is initiated on the container on each start
+            # and bound to the host ip
+            - XDEBUG_CONFIG=remote_host=host.docker.internal remote_autostart=On remote_enable=On idekey=XDEBUG remote_log=/tmp/xdebug.log remote_port=9999
+            - PHP_XDEBUG_ENABLED=1
+            - PHP_XDEBUG_IDE_KEY=XDEBUG
         depends_on:
             # use mysql instead of db if you disabled the db proxy
             - db
