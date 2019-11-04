@@ -135,10 +135,10 @@ RUN useradd docker --shell /bin/bash --create-home \
 RUN apt-get clean && apt-get --yes --quiet autoremove --purge \
     && rm -Rf /tmp/*
 
-ADD ./docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
+ADD docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 RUN chmod a+x /usr/local/bin/docker_entrypoint.sh
 
-ENTRYPOINT ["/usr/bin/sudo /usr/local/bin/docker_entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/sudo", "/usr/local/bin/docker_entrypoint.sh"]
 
 USER docker
 
