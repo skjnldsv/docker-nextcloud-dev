@@ -1,4 +1,5 @@
 ssl/*
+data/*
 *.code-workspace
 apps2/*
 config/*
