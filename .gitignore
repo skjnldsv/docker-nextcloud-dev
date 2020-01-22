@@ -1,0 +1,5 @@
+ssl/*
+*.code-workspace
+apps2/*
+config/*
+server/*
