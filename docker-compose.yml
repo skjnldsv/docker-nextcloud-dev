@@ -2,6 +2,7 @@ version: '2'
 
 volumes:
     mariadb:
+    web-certs:
 
 networks:
     nextcloud:
@@ -84,20 +85,28 @@ services:
     web:
         image: nginx
         ports:
-        # UNCOMMENT IF SSL WANTED
-        #    - 443:443
+            - 443:443
             - 80:80
         volumes:
             - ./server:/var/www/nextcloud
             - ./apps2:/var/www/nextcloud/apps2
             - ./nextcloud.conf:/etc/nginx/conf.d/default.conf:ro
-            # UNCOMMENT IF SSL WANTED
-            # - ./ssl:/etc/nginx/ssl:ro
+            - web-certs:/etc/nginx/certs:ro
         restart: always
         networks:
             - nextcloud
         depends_on:
             - php
+
+    omgwtfssl:
+        image: paulczar/omgwtfssl
+        volumes:
+            - web-certs:/certs
+        environment:
+            # CHANGE IT TO YOU DOMAIN NAME
+            - SSL_SUBJECT=dev.domain.com
+        networks:
+            - nextcloud
 
     # UNCOMMENT TO ENABLE PHPMYADMIN
     # phpmyadmin:
