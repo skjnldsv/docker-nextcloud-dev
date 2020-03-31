@@ -24,26 +24,15 @@ Only the php-handler server is changed to the php container
    cd ..
    ```
 4. Execute the stack: `docker-compose up -d`
-5. Access the nextcloud through http://localhost
+5. Access the nextcloud through https://localhost
 6. Go to the setup of your nextcloud, enter your desired username and your password
 7. Enjoy contributing! 🥂 🎉 
 
 ## Using https 🔐
-1. Search for all the `IF SSL WANTED` strings on the `nextcloud.conf` and `docker-compose.yml`
-2. Comment or uncomment accordingly
-3. Put your ssl certificates on the ssl folder (`fullchain.pem`, `privkey.pem` and `chain.pem`)
-4. Set your domain name on the `server_name` option of the `nextcloud.conf` file
-5. Make sure your browser bind your domain name to the appropriate ip
-   If you did not change anything on the ports config, you can simply edit your `/etc/hosts` file and add an entry with your domain name and `127.0.0.1`: `127.0.0.1		your.domain.name
-6. Add your domain to the list of trusted domains in your `server/config/config.php` file:
-   ``` php
-   'trusted_domains' => 
-   array (
-     0 => 'localhost',
-     1 => 'your.domain.name',
-   ),
-   ```
-6. Now access https://your.domain.name.
+1. We now generate self signed certificates on start.
+2. Before starting it, you can edit the domain in the `docker-compose.yml` file, check for the omgwtfssl service.
+3. Currently the config is made to redirect all http traffic to https.
+4. You will see an error at first because the ssl certificates are not approved by a trust entity, this is all safe, you just generated them. Approve them manually on your browser and start using your dev stack :wink:
 
 ## Retrieve a container's IP 🌐
 ```sh
