@@ -53,7 +53,6 @@ RUN set -ex; \
         gd \
         intl \
         ldap \
-        opcache \
         pcntl \
         pdo_mysql \
         pdo_pgsql \
@@ -106,20 +105,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | b
     && nvm install --lts
 
 # set recommended PHP.ini settings
-# see https://docs.nextcloud.com/server/12/admin_manual/configuration_server/server_tuning.html#enable-php-opcache
-RUN { \
-        echo 'opcache.enable=1'; \
-        echo 'opcache.enable_cli=1'; \
-        echo 'opcache.interned_strings_buffer=8'; \
-        echo 'opcache.max_accelerated_files=10000'; \
-        echo 'opcache.memory_consumption=128'; \
-        echo 'opcache.save_comments=1'; \
-        echo 'opcache.revalidate_freq=1'; \
-    } > /usr/local/etc/php/conf.d/opcache-recommended.ini; \
-    \
-    echo 'apc.enable_cli=1' >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini; \
-    \
-    echo 'memory_limit=512M' > /usr/local/etc/php/conf.d/memory-limit.ini; \
+# see https://docs.nextcloud.com/server/12/admin_manual/configuration_server/server_tuning.html
+RUN echo 'memory_limit=512M' > /usr/local/etc/php/conf.d/memory-limit.ini; \
     \
     mkdir /var/www/data; \
     chown -R www-data:root /var/www; \
