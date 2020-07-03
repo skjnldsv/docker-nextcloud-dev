@@ -55,7 +55,6 @@ services:
             - ./config/redis.config.php:/var/www/nextcloud/config/redis.config.php:ro
             # UNCOMMENT TO ENABLE SMTP
             # - ./config/smtp.config.php:/var/www/nextcloud/config/smtp.config.php:ro
-            - ./config/apcu.config.php:/var/www/nextcloud/config/apcu.config.php:ro
             - ./config/apps.config.php:/var/www/nextcloud/config/apps.config.php:ro
         restart: always
         environment:
