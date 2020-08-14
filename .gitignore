@@ -1,6 +1,4 @@
-ssl/*
-data/*
 *.code-workspace
-apps2/*
-config/*
-server/*
+apps2
+data
+server
