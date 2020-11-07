@@ -19,7 +19,7 @@ RUN set -ex; \
     echo '*/15 * * * * php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data
 
 # Install phpunit 7
-RUN curl -L https://phar.phpunit.de/phpunit-7.phar > /usr/local/bin/phpunit \
+RUN curl -L https://phar.phpunit.de/phpunit-8.phar > /usr/local/bin/phpunit \
     && chmod +x /usr/local/bin/phpunit
 
 # install the PHP extensions we need
