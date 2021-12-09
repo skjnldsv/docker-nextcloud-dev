@@ -12,7 +12,7 @@ services:
         image: mariadb
         restart: always
         # https://docs.nextcloud.com/server/stable/admin_manual/configuration_database/mysql_4byte_support.html
-        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --innodb-large-prefix --innodb-file-per-table --innodb-file-format=barracuda
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --innodb-large-prefix --innodb-file-per-table --innodb-file-format=barracuda --skip-innodb-read-only-compressed
         volumes:
             - mariadb:/var/lib/mysql
         environment:
