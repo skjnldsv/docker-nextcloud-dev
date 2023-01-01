@@ -16,3 +16,9 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
+
+  - package-ecosystem: "docker"
+    directory: "/docker-mysql-proxy"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
