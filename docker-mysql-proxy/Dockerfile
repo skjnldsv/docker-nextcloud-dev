@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:bullseye
 # docker build -t bscheshir/mysql-proxy:0.8.5 .
 MAINTAINER BSCheshir <bscheshir.work@gmail.com>
 
