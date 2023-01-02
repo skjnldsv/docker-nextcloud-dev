@@ -81,3 +81,6 @@ Want a quick smtp server to test emails on nextcloud ?
    (make sure you've set your email in your nextcloud user account)
 3. Go on the nextcloud smtp settings and click the `Send test email` button!
 4. You've got mail! 📫
+
+## Troubleshooting
+- *The files of the app (viewer) were not replaced correctly.* Solution: execute `git clone https://github.com/nextcloud/viewer.git` in the apps2 directory
