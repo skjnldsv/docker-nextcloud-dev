@@ -24,71 +24,26 @@ RUN curl -L https://phar.phpunit.de/phpunit-8.phar > /usr/local/bin/phpunit \
 
 # install the PHP extensions we need
 # see https://docs.nextcloud.com/server/12/admin_manual/installation/source_installation.html
-RUN set -ex; \
-    \
-    savedAptMark="$(apt-mark showmanual)"; \
-    \
-    apt-get update; \
-    apt-get install -y --no-install-recommends \
-        libcurl4-openssl-dev \
-        libfreetype6-dev \
-        libicu-dev \
-        libjpeg-dev \
-        libldap2-dev \
-        libmcrypt-dev \
-        libmemcached-dev \
-        libpng-dev \
-        libpq-dev \
-        libxml2-dev \
-        libmagickwand-dev \
-        libsmbclient-dev \
-        libzip-dev \
-    ; \
-    \
-    debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
-    docker-php-ext-configure gd --with-freetype --with-jpeg; \
-    docker-php-ext-configure ldap --with-libdir="lib/$debMultiarch"; \
-    docker-php-ext-install \
-        exif \
-        gd \
-        intl \
-        ldap \
-        pcntl \
-        pdo_mysql \
-        pdo_pgsql \
-        zip \
-    ; \
-    \
-# pecl will claim success even if one install fails, so we need to perform each install separately
-    pecl install APCu; \
-    pecl install memcached; \
-    pecl install redis; \
-    pecl install imagick; \
-    pecl install xdebug; \
-    pecl install smbclient; \
-    \
-    docker-php-ext-enable \
-        apcu \
-        memcached \
-        redis \
-        imagick \
-        xdebug \
-        smbclient \
-    ; \
-    \
-# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
-    apt-mark auto '.*' > /dev/null; \
-    apt-mark manual $savedAptMark; \
-    ldd "$(php -r 'echo ini_get("extension_dir");')"/*.so \
-        | awk '/=>/ { print $3 }' \
-        | sort -u \
-        | xargs -r dpkg-query -S \
-        | cut -d: -f1 \
-        | sort -u \
-        | xargs -rt apt-mark manual; \
-    \
-    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-    rm -rf /var/lib/apt/lists/*
+RUN curl -sSLf \
+        -o /usr/local/bin/install-php-extensions \
+        https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions && \
+    chmod +x /usr/local/bin/install-php-extensions
+
+RUN install-php-extensions \
+    apcu \
+    exif \
+    gd \
+    imagick \
+    intl \
+    ldap \
+    memcached \
+    pcntl \
+    pdo_mysql \
+    pdo_pgsql \
+    redis \
+    smbclient \
+    xdebug \
+    zip
 
 # samba
 RUN { \
