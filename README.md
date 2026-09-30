@@ -1,3 +1,8 @@
+Deprecated ⚠️
+Please use the official Nextcloud docker dev stack https://github.com/nextcloud/nextcloud-docker-dev
+
+____________
+
 [![Docker Automated build](https://img.shields.io/docker/automated/skjnldsv/nextcloud-dev.svg?style=flat-square)](https://hub.docker.com/r/skjnldsv/nextcloud-dev/) [![Docker Pulls](https://img.shields.io/docker/pulls/skjnldsv/nextcloud-dev.svg?style=flat-square)](https://hub.docker.com/r/skjnldsv/nextcloud-dev/)
 
 
